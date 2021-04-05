@@ -1,10 +1,11 @@
-const app = (
-  <div className='app'>
-    <h1>hello world</h1>
-  </div>
-);
+const App = () => {
+  return (
+    <div className='app'>
+      <h1>hello world</h1>
+    </div>
+  );
+};
 
-console.log('hello calculator');
-const appRoot = document.getElementById('app');
+const appRoot = document.getElementById('root');
 
-ReactDOM.render(app, appRoot);
+ReactDOM.render(<App />, appRoot);
