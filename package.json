@@ -4,9 +4,20 @@
   "main": "index.js",
   "author": "Ylva Turner",
   "license": "MIT",
+  "scripts": {
+    "serve": "live-server public/",
+    "build": "webpack --watch",
+    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=@babel/env,@babel/react --watch"
+  },
   "dependencies": {
+    "@babel/cli": "^7.13.16",
     "@babel/core": "^7.13.14",
     "@babel/preset-env": "^7.13.12",
-    "@babel/preset-react": "^7.13.13"
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "live-server": "^1.2.1",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

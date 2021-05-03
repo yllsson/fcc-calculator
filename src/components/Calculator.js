@@ -1,8 +1,8 @@
 const Calculator = () => {
   return (
-    <main>
+    <div>
       <h2>I'm the Calculator component</h2>
-    </main>
+    </div>
   );
 };
 
