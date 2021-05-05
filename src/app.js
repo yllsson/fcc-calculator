@@ -3,8 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Calculator from './components/Calculator';
 
-// need to fix my imports somehow
-
 /*
 All the components I need:
 
@@ -14,7 +12,6 @@ container/Calculator
     Button * however many I need
   
 */
-console.log('hello');
 
 class App extends React.Component {
   render() {
