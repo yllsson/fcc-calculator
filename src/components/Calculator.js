@@ -79,6 +79,11 @@ const Calculator = () => {
     }
   ];
 
+  const handleDigitClick = eventText => {
+    // currently grabs the innerText of the button component clicked, and sets the displayText to this
+    setDisplayText(eventText);
+  };
+
   return (
     <div className='calculator'>
       <h1>I'm the Calculator component</h1>
@@ -86,7 +91,14 @@ const Calculator = () => {
 
       <section className='buttonContainer'>
         {digits.map(button => (
-          <Button buttonText={button.text} id={button.id} key={button.id} />
+          <Button
+            onClick={e => {
+              handleDigitClick(e.target.innerText);
+            }}
+            buttonText={button.text}
+            id={button.id}
+            key={button.id}
+          />
         ))}
 
         {operators.map(button => (
