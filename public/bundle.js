@@ -20,13 +20,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 
 /***/ }),
 
+/***/ "./src/components/Button.js":
+/*!**********************************!*\
+  !*** ./src/components/Button.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\n\nvar Button = function Button(_ref) {\n  var buttonText = _ref.buttonText,\n      id = _ref.id;\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"button\", {\n    id: id\n  }, buttonText);\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);\n\n//# sourceURL=webpack://fcc-calculator/./src/components/Button.js?");
+
+/***/ }),
+
 /***/ "./src/components/Calculator.js":
 /*!**************************************!*\
   !*** ./src/components/Calculator.js ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\n\nvar Calculator = function Calculator() {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"h2\", null, \"I'm the Calculator component\"));\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Calculator);\n\n//# sourceURL=webpack://fcc-calculator/./src/components/Calculator.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ \"./src/components/Button.js\");\n\n\n\nvar Calculator = function Calculator() {\n  var digits = [{\n    text: '0',\n    id: 'zero'\n  }, {\n    text: '1',\n    id: 'one'\n  }, {\n    text: '2',\n    id: 'two'\n  }, {\n    text: '3',\n    id: 'three'\n  }, {\n    text: '4',\n    id: 'four'\n  }, {\n    text: '5',\n    id: 'five'\n  }, {\n    text: '6',\n    id: 'six'\n  }, {\n    text: '7',\n    id: 'seven'\n  }, {\n    text: '8',\n    id: 'eight'\n  }, {\n    text: '9',\n    id: 'nine'\n  }];\n  var operators = [{\n    text: '=',\n    id: 'equals'\n  }, {\n    text: '+',\n    id: 'add'\n  }, {\n    text: '-',\n    id: 'subtract'\n  }, {\n    text: '*',\n    id: 'multiply'\n  }, {\n    text: '/',\n    id: 'divide'\n  }];\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", {\n    className: \"calculator\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"h2\", null, \"I'm the Calculator component\"), digits.map(function (button) {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Button__WEBPACK_IMPORTED_MODULE_1__.default, {\n      buttonText: button.text,\n      id: button.id,\n      key: button.id\n    });\n  }), operators.map(function (button) {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Button__WEBPACK_IMPORTED_MODULE_1__.default, {\n      buttonText: button.text,\n      id: button.id,\n      key: button.id\n    });\n  }));\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Calculator);\n\n//# sourceURL=webpack://fcc-calculator/./src/components/Calculator.js?");
 
 /***/ }),
 
