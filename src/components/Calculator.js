@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
+import Display from './Display';
 
 const Calculator = () => {
+  // state
+  const [displayText, setDisplayText] = useState('0');
+
   const digits = [
     {
       text: '0',
@@ -44,7 +48,6 @@ const Calculator = () => {
       id: 'nine'
     }
   ];
-
   const operators = [
     {
       text: '=',
@@ -65,20 +68,31 @@ const Calculator = () => {
     {
       text: '/',
       id: 'divide'
+    },
+    {
+      text: ',',
+      id: 'decimal'
+    },
+    {
+      text: 'C',
+      id: 'clear'
     }
   ];
 
   return (
     <div className='calculator'>
-      <h2>I'm the Calculator component</h2>
+      <h1>I'm the Calculator component</h1>
+      <Display displayText={displayText} />
 
-      {digits.map(button => (
-        <Button buttonText={button.text} id={button.id} key={button.id} />
-      ))}
+      <section className='buttonContainer'>
+        {digits.map(button => (
+          <Button buttonText={button.text} id={button.id} key={button.id} />
+        ))}
 
-      {operators.map(button => (
-        <Button buttonText={button.text} id={button.id} key={button.id} />
-      ))}
+        {operators.map(button => (
+          <Button buttonText={button.text} id={button.id} key={button.id} />
+        ))}
+      </section>
     </div>
   );
 };
