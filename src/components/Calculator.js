@@ -101,10 +101,12 @@ const Calculator = () => {
   return (
     <div className='calculator'>
       <h1>I'm the Calculator component</h1>
-      <section id='display'>
-        <Display className='inputDisplay' displayText={displayText} />
-        <Display className='outputDisplay' displayText={displayText} />
-      </section>
+      <Display
+        className='inputDisplay'
+        displayText={displayText}
+        id='display'
+      />
+      <Display className='outputDisplay' displayText={displayText} />
 
       <section className='buttonContainer'>
         {digits.map(button => (
