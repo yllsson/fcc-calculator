@@ -8,10 +8,6 @@ const Calculator = () => {
 
   const digits = [
     {
-      text: '0',
-      id: 'zero'
-    },
-    {
       text: '1',
       id: 'one'
     },
@@ -46,6 +42,14 @@ const Calculator = () => {
     {
       text: '9',
       id: 'nine'
+    },
+    {
+      text: '0',
+      id: 'zero'
+    },
+    {
+      text: '.',
+      id: 'decimal'
     }
   ];
   const operators = [
@@ -70,24 +74,37 @@ const Calculator = () => {
       id: 'divide'
     },
     {
-      text: ',',
-      id: 'decimal'
-    },
-    {
       text: 'C',
-      id: 'clear'
+      id: 'clear',
+      handler() {
+        setDisplayText('0');
+      }
     }
   ];
 
   const handleDigitClick = eventText => {
-    // currently grabs the innerText of the button component clicked, and sets the displayText to this
-    setDisplayText(eventText);
+    /* grabs the innerText of the button component clicked,
+    checks whether the current text is a single 0,
+    if it is - sets the displayText directly to the event target value
+    else - concatenates the event target value to the current displayText */
+    let newText;
+
+    if (displayText === '0') {
+      newText = eventText;
+    } else {
+      newText = displayText + eventText;
+    }
+
+    setDisplayText(newText);
   };
 
   return (
     <div className='calculator'>
       <h1>I'm the Calculator component</h1>
-      <Display displayText={displayText} />
+      <section id='display'>
+        <Display className='inputDisplay' displayText={displayText} />
+        <Display className='outputDisplay' displayText={displayText} />
+      </section>
 
       <section className='buttonContainer'>
         {digits.map(button => (
@@ -102,7 +119,12 @@ const Calculator = () => {
         ))}
 
         {operators.map(button => (
-          <Button buttonText={button.text} id={button.id} key={button.id} />
+          <Button
+            buttonText={button.text}
+            id={button.id}
+            key={button.id}
+            onClick={button.handler}
+          />
         ))}
       </section>
     </div>
