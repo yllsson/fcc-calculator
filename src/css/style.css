@@ -2,6 +2,27 @@
   box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 100vh;
+}
+
 h1 {
   color: green;
+}
+
+.calculator {
+  border: 1px solid green;
+}
+
+.display {
+  border: 1px solid purple;
+}
+
+.buttonContainer {
+  border: 1px solid purple;
 }
