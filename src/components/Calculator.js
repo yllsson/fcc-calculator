@@ -86,11 +86,14 @@ const Calculator = () => {
     /* grabs the innerText of the button component clicked,
     checks whether the current text is a single 0,
     if it is - sets the displayText directly to the event target value
+    else if the string already includes a decimal point - retains the current displayText.
     else - concatenates the event target value to the current displayText */
     let newText;
 
     if (displayText === '0') {
       newText = eventText;
+    } else if (displayText.includes('.') && eventText === '.') {
+      newText = displayText;
     } else {
       newText = displayText + eventText;
     }
