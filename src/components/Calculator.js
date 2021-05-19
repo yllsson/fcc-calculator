@@ -112,7 +112,7 @@ const Calculator = () => {
   const handleOperator = operator => {
     setFirstNum(parseFloat(displayText));
     setOperator(operator);
-    console.log(displayText, operator);
+    // console.log(displayText, operator);
     setDisplayText('0');
   };
 
@@ -124,13 +124,22 @@ const Calculator = () => {
       case '+':
         sum = firstNum + parseFloat(displayText);
         break;
+      case '-':
+        sum = firstNum - parseFloat(displayText);
+        break;
+      case '*':
+        sum = firstNum * parseFloat(displayText);
+        break;
+      case '/':
+        sum = firstNum / parseFloat(displayText);
+        break;
       default:
         sum = 'I am a papaya';
         console.log(sum);
     }
 
     setDisplayText(sum);
-    console.log(firstNum, displayText, 'equality yo', operator, sum);
+    // console.log(firstNum, displayText, 'equality yo', operator, sum);
   };
 
   return (
