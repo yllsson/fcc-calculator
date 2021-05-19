@@ -103,7 +103,6 @@ const Calculator = () => {
 
   return (
     <div className='calculator'>
-      <h1>I'm the Calculator component</h1>
       <Display
         className='inputDisplay'
         displayText={displayText}

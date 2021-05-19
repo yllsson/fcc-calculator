@@ -1,3 +1,7 @@
+// Variables
+$med-size: 1.6rem;
+
+// Mixins
 @mixin flexbox($direction) {
   display: flex;
   flex-direction: $direction;
@@ -9,8 +13,13 @@
   border: 1px solid $color;
 }
 
+// general style
 * {
   box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 body {
@@ -19,18 +28,23 @@ body {
   height: 100vh;
 }
 
-h1 {
-  color: green;
-}
-
+// calculator
 .calculator {
   @include border(green);
+  padding: $med-size;
 }
 
 .display {
   @include border(purple);
+  padding: $med-size;
+  font-size: 2.4rem;
 }
 
+// buttons
 .buttonContainer {
   @include border(purple);
+}
+
+button {
+  font-size: $med-size;
 }
