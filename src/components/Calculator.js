@@ -5,6 +5,9 @@ import Display from './Display';
 const Calculator = () => {
   // state
   const [displayText, setDisplayText] = useState('0');
+  const [firstNum, setFirstNum] = useState(0);
+  const [secondNum, setSecondNum] = useState(0);
+  const [operator, setOperator] = useState('');
 
   const digits = [
     {
@@ -75,10 +78,10 @@ const Calculator = () => {
     },
     {
       text: 'C',
-      id: 'clear',
-      handler() {
-        setDisplayText('0');
-      }
+      id: 'clear'
+      // handler() {
+      //   setDisplayText('0');
+      // }
     }
   ];
 
@@ -99,6 +102,29 @@ const Calculator = () => {
     }
 
     setDisplayText(newText);
+  };
+
+  /*
+  takes the name of the operator and stores in operator.
+  takes the current displayText and stores in firstNum
+  resets the displayText
+  */
+  const handleOperator = operator => {
+    setFirstNum(parseFloat(displayText));
+    setOperator(operator);
+    console.log(displayText, operator);
+    setDisplayText('0');
+  };
+
+  const handleEqualSign = () => {
+    setSecondNum(displayText);
+    let sum;
+    console.log(firstNum, secondNum, displayText, 'equality yo');
+
+    // switch (operator) {
+    //   case '+':
+    //     sum =
+    // }
   };
 
   return (
@@ -122,14 +148,40 @@ const Calculator = () => {
           />
         ))}
 
-        {operators.map(button => (
-          <Button
-            buttonText={button.text}
-            id={button.id}
-            key={button.id}
-            onClick={button.handler}
-          />
-        ))}
+        {operators.map(button => {
+          if (button.text === 'C') {
+            return (
+              <Button
+                buttonText={button.text}
+                id={button.id}
+                key={button.id}
+                onClick={() => setDisplayText('0')}
+              />
+            );
+          } else if (button.text === '=') {
+            return (
+              <Button
+                buttonText={button.text}
+                id={button.id}
+                key={button.id}
+                onClick={e => {
+                  handleEqualSign();
+                }}
+              />
+            );
+          } else {
+            return (
+              <Button
+                buttonText={button.text}
+                id={button.id}
+                key={button.id}
+                onClick={e => {
+                  handleOperator(e.target.innerText);
+                }}
+              />
+            );
+          }
+        })}
       </section>
     </div>
   );
