@@ -6,7 +6,7 @@ const Calculator = () => {
   // state
   const [displayText, setDisplayText] = useState('0');
   const [firstNum, setFirstNum] = useState(0);
-  const [secondNum, setSecondNum] = useState(0);
+  // const [secondNum, setSecondNum] = useState(0);
   const [operator, setOperator] = useState('');
 
   const digits = [
@@ -117,14 +117,20 @@ const Calculator = () => {
   };
 
   const handleEqualSign = () => {
-    setSecondNum(displayText);
+    // setSecondNum(displayText);
     let sum;
-    console.log(firstNum, secondNum, displayText, 'equality yo');
 
-    // switch (operator) {
-    //   case '+':
-    //     sum =
-    // }
+    switch (operator) {
+      case '+':
+        sum = firstNum + parseFloat(displayText);
+        break;
+      default:
+        sum = 'I am a papaya';
+        console.log(sum);
+    }
+
+    setDisplayText(sum);
+    console.log(firstNum, displayText, 'equality yo', operator, sum);
   };
 
   return (
@@ -165,7 +171,7 @@ const Calculator = () => {
                 id={button.id}
                 key={button.id}
                 onClick={e => {
-                  handleEqualSign();
+                  handleEqualSign(e.target.innerText);
                 }}
               />
             );
