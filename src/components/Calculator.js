@@ -38,10 +38,18 @@ const Calculator = () => {
   Takes the current displayText and stores in firstNum.
   Resets the displayText.
   */
-  const handleOperator = (operator) => {
-    setFirstNum(parseFloat(displayText));
-    setOperator(operator);
-    setDisplayText('0');
+  const handleOperator = (eventOperator) => {
+    // to be fixed!! currently you cannot press more than one operator in a row as the firstNum will reset to 0
+    // also want to fix it so you can press digit * - + and have it use the + without the displayText getting locked in as the '-' sign.
+    if (displayText === '0' && eventOperator === '-') {
+      setDisplayText(eventOperator);
+      console.log('minus', displayText, operator, eventOperator);
+    } else {
+      setFirstNum(parseFloat(displayText));
+      setOperator(eventOperator);
+      setDisplayText('0');
+      console.log('operator', firstNum, displayText, operator, eventOperator);
+    }
   };
 
   /* handleEqualSign()
