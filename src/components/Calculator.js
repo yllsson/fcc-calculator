@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Button from './Button';
 import Display from './Display';
+import digits from '../data/digits';
+import operators from '../data/operators';
 
 const Calculator = () => {
   // state
@@ -9,83 +11,7 @@ const Calculator = () => {
   // const [secondNum, setSecondNum] = useState(0);
   const [operator, setOperator] = useState('');
 
-  const digits = [
-    {
-      text: '1',
-      id: 'one'
-    },
-    {
-      text: '2',
-      id: 'two'
-    },
-    {
-      text: '3',
-      id: 'three'
-    },
-    {
-      text: '4',
-      id: 'four'
-    },
-    {
-      text: '5',
-      id: 'five'
-    },
-    {
-      text: '6',
-      id: 'six'
-    },
-    {
-      text: '7',
-      id: 'seven'
-    },
-    {
-      text: '8',
-      id: 'eight'
-    },
-    {
-      text: '9',
-      id: 'nine'
-    },
-    {
-      text: '0',
-      id: 'zero'
-    },
-    {
-      text: '.',
-      id: 'decimal'
-    }
-  ];
-  const operators = [
-    {
-      text: '=',
-      id: 'equals'
-    },
-    {
-      text: '+',
-      id: 'add'
-    },
-    {
-      text: '-',
-      id: 'subtract'
-    },
-    {
-      text: '*',
-      id: 'multiply'
-    },
-    {
-      text: '/',
-      id: 'divide'
-    },
-    {
-      text: 'C',
-      id: 'clear'
-      // handler() {
-      //   setDisplayText('0');
-      // }
-    }
-  ];
-
-  const handleDigitClick = eventText => {
+  const handleDigitClick = (eventText) => {
     /* grabs the innerText of the button component clicked,
     checks whether the current text is a single 0,
     if it is - sets the displayText directly to the event target value
@@ -109,7 +35,7 @@ const Calculator = () => {
   takes the current displayText and stores in firstNum
   resets the displayText
   */
-  const handleOperator = operator => {
+  const handleOperator = (operator) => {
     setFirstNum(parseFloat(displayText));
     setOperator(operator);
     // console.log(displayText, operator);
@@ -152,9 +78,9 @@ const Calculator = () => {
       <Display className='outputDisplay' displayText={displayText} />
 
       <section className='buttonContainer'>
-        {digits.map(button => (
+        {digits.map((button) => (
           <Button
-            onClick={e => {
+            onClick={(e) => {
               handleDigitClick(e.target.innerText);
             }}
             buttonText={button.text}
@@ -163,7 +89,7 @@ const Calculator = () => {
           />
         ))}
 
-        {operators.map(button => {
+        {operators.map((button) => {
           if (button.text === 'C') {
             return (
               <Button
@@ -179,7 +105,7 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={e => {
+                onClick={(e) => {
                   handleEqualSign(e.target.innerText);
                 }}
               />
@@ -190,7 +116,7 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={e => {
+                onClick={(e) => {
                   handleOperator(e.target.innerText);
                 }}
               />
