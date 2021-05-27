@@ -5,23 +5,26 @@ import digits from '../data/digits';
 import operators from '../data/operators';
 
 const Calculator = () => {
-  // state
+  // STATE //
   const [displayText, setDisplayText] = useState('0');
   const [firstNum, setFirstNum] = useState(0);
-  // const [secondNum, setSecondNum] = useState(0);
   const [operator, setOperator] = useState('');
+  const [lastSum, setLastSum] = useState(0);
 
-  const handleDigitClick = (eventText) => {
-    /* grabs the innerText of the button component clicked,
+  // FUNCTIONS //
+
+  /* handleDigitClick()
+    Grabs the innerText of the button component clicked,
     checks whether the current text is a single 0,
     if it is - sets the displayText directly to the event target value
     else if the string already includes a decimal point - retains the current displayText.
     else - concatenates the event target value to the current displayText */
+  const handleDigitClick = (eventText) => {
     let newText;
 
     if (displayText === '0') {
       newText = eventText;
-    } else if (displayText.includes('.') && eventText === '.') {
+    } else if (String(displayText).includes('.') && eventText === '.') {
       newText = displayText;
     } else {
       newText = displayText + eventText;
@@ -30,20 +33,22 @@ const Calculator = () => {
     setDisplayText(newText);
   };
 
-  /*
-  takes the name of the operator and stores in operator.
-  takes the current displayText and stores in firstNum
-  resets the displayText
+  /* handleOperator()
+  Takes the name of the operator and stores in operator.
+  Takes the current displayText and stores in firstNum.
+  Resets the displayText.
   */
   const handleOperator = (operator) => {
     setFirstNum(parseFloat(displayText));
     setOperator(operator);
-    // console.log(displayText, operator);
     setDisplayText('0');
   };
 
+  /* handleEqualSign()
+  Sets a variable sum.
+  Checks the chosen operator (+,-,*,/) and performs the according calculation.
+  */
   const handleEqualSign = () => {
-    // setSecondNum(displayText);
     let sum;
 
     switch (operator) {
@@ -65,17 +70,21 @@ const Calculator = () => {
     }
 
     setDisplayText(sum);
-    // console.log(firstNum, displayText, 'equality yo', operator, sum);
+    setLastSum(sum);
+    setFirstNum(0);
+    setOperator('');
+    console.log(lastSum, firstNum, operator, displayText, sum);
   };
 
+  // RETURN/RENDER //
   return (
     <div className='calculator'>
+      <Display className='inputDisplay' displayText={lastSum} />
       <Display
-        className='inputDisplay'
+        className='outputDisplay'
         displayText={displayText}
         id='display'
       />
-      <Display className='outputDisplay' displayText={displayText} />
 
       <section className='buttonContainer'>
         {digits.map((button) => (
