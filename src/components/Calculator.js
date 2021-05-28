@@ -9,9 +9,17 @@ const Calculator = () => {
   const [displayText, setDisplayText] = useState('0');
   const [firstNum, setFirstNum] = useState(0);
   const [operator, setOperator] = useState('');
-  const [lastSum, setLastSum] = useState(0);
+  const [prevSum, setPrevSum] = useState(0);
 
   // FUNCTIONS //
+
+  /* handleReset()
+    resets firstNum and operator
+  */
+  const handleReset = () => {
+    setFirstNum(0);
+    setOperator('');
+  };
 
   /* handleDigitClick()
     Grabs the innerText of the button component clicked,
@@ -40,27 +48,18 @@ const Calculator = () => {
   */
   const handleOperator = eventOperator => {
     // to be fixed!! currently you cannot press more than one operator in a row as the firstNum will reset to 0
-    // also want to fix it so you can press digit * - + and have it use the + without the displayText getting locked in as the '-' sign.
+
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
-      console.log(
-        `Minus clicked while 0 in display. 
-        operator: ${operator}, 
-        displayText: ${displayText}, 
-        eventOperator: ${eventOperator}`
-      );
+    } else if (displayText === '-') {
+      setOperator(eventOperator);
+      setDisplayText('0');
+    } else if (displayText == 0) {
+      setOperator(eventOperator);
     } else {
       setFirstNum(parseFloat(displayText));
       setOperator(eventOperator);
       setDisplayText('0');
-      console.log(
-        `Operator clicked:
-        lastSum: ${lastSum}, 
-        firstNum: ${firstNum}, 
-        operator: ${operator}, 
-        displayText: ${displayText}, 
-        eventOperator: ${eventOperator}`
-      );
     }
   };
 
@@ -91,15 +90,14 @@ const Calculator = () => {
 
     // sets the text to each display
     setDisplayText(sum);
-    setLastSum(sum);
+    setPrevSum(sum);
 
     // resets firstNum and operator
-    setFirstNum(0);
-    setOperator('');
+    handleReset();
 
     console.log(
       `Equal was pressed.
-      LastSum: ${lastSum}, 
+      prevSum: ${prevSum}, 
       firstNum: ${firstNum}, 
       operator: ${operator}, 
       displayText: ${displayText}, 
@@ -110,8 +108,8 @@ const Calculator = () => {
   // RETURN/RENDER //
   return (
     <div className='calculator'>
-      <h1>lastSum</h1>
-      <Display className='inputDisplay' displayText={lastSum} />
+      <h1>prevSum</h1>
+      <Display className='inputDisplay' displayText={prevSum} />
       <h1>displayText</h1>
       <Display
         className='outputDisplay'
@@ -137,7 +135,10 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={() => setDisplayText('0')}
+                onClick={() => {
+                  handleReset();
+                  setDisplayText('0');
+                }}
               />
             );
           } else if (button.text === '=') {
@@ -174,6 +175,9 @@ const Calculator = () => {
           </div>
           <div>
             <h1>displayText: {displayText}</h1>
+          </div>
+          <div>
+            <h1>prevSum: {prevSum}</h1>
           </div>
         </div>
       </section>
