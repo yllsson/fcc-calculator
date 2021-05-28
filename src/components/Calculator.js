@@ -7,9 +7,9 @@ import operators from '../data/operators';
 const Calculator = () => {
   // STATE //
   const [displayText, setDisplayText] = useState('0');
+  const [topDisplayText, setTopDisplayText] = useState('');
   const [firstNum, setFirstNum] = useState(0);
   const [operator, setOperator] = useState('');
-  const [prevSum, setPrevSum] = useState(0);
 
   // FUNCTIONS //
 
@@ -39,6 +39,7 @@ const Calculator = () => {
     }
 
     setDisplayText(newText);
+    setTopDisplayText(`${topDisplayText} ${newText}`);
   };
 
   /* handleOperator()
@@ -48,6 +49,7 @@ const Calculator = () => {
   */
   const handleOperator = eventOperator => {
     // to be fixed!! currently you cannot press more than one operator in a row as the firstNum will reset to 0
+    let newTopDisp = `${topDisplayText} ${eventOperator}`;
 
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
@@ -61,6 +63,8 @@ const Calculator = () => {
       setOperator(eventOperator);
       setDisplayText('0');
     }
+
+    setTopDisplayText(newTopDisp);
   };
 
   /* handleEqualSign()
@@ -90,14 +94,14 @@ const Calculator = () => {
 
     // sets the text to each display
     setDisplayText(sum);
-    setPrevSum(sum);
+    setTopDisplayText(`${topDisplayText} = ${sum}`);
 
     // resets firstNum and operator
     handleReset();
 
     console.log(
       `Equal was pressed.
-      prevSum: ${prevSum}, 
+      topDisplayText: ${topDisplayText}
       firstNum: ${firstNum}, 
       operator: ${operator}, 
       displayText: ${displayText}, 
@@ -108,8 +112,8 @@ const Calculator = () => {
   // RETURN/RENDER //
   return (
     <div className='calculator'>
-      <h1>prevSum</h1>
-      <Display className='inputDisplay' displayText={prevSum} />
+      <h1>topDisplayText</h1>
+      <Display className='inputDisplay' displayText={topDisplayText} />
       <h1>displayText</h1>
       <Display
         className='outputDisplay'
@@ -138,6 +142,7 @@ const Calculator = () => {
                 onClick={() => {
                   handleReset();
                   setDisplayText('0');
+                  setTopDisplayText('');
                 }}
               />
             );
@@ -177,7 +182,7 @@ const Calculator = () => {
             <h1>displayText: {displayText}</h1>
           </div>
           <div>
-            <h1>prevSum: {prevSum}</h1>
+            <h1>topDisplayText: {topDisplayText}</h1>
           </div>
         </div>
       </section>
