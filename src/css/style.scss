@@ -13,6 +13,16 @@ $med-size: 1.6rem;
   border: 1px solid $color;
 }
 
+// Temporary bug fix style
+
+.debug-console {
+  @include flexbox(row);
+  justify-content: space-between;
+}
+h1 {
+  color: olivedrab;
+}
+
 // general style
 * {
   box-sizing: border-box;

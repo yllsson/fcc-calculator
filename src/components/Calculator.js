@@ -10,7 +10,6 @@ const Calculator = () => {
   const [firstNum, setFirstNum] = useState(0);
   const [operator, setOperator] = useState('');
   const [lastSum, setLastSum] = useState(0);
-  const [showingResult, setShowingResult] = useState(false);
 
   // FUNCTIONS //
 
@@ -20,12 +19,8 @@ const Calculator = () => {
     if it is - sets the displayText directly to the event target value
     else if the string already includes a decimal point - retains the current displayText.
     else - concatenates the event target value to the current displayText */
-  const handleDigitClick = (eventText) => {
+  const handleDigitClick = eventText => {
     let newText;
-
-    if (showingResult) {
-      setShowingResult(false);
-    }
 
     if (displayText === '0') {
       newText = eventText;
@@ -43,20 +38,28 @@ const Calculator = () => {
   Takes the current displayText and stores in firstNum.
   Resets the displayText.
   */
-  const handleOperator = (eventOperator) => {
+  const handleOperator = eventOperator => {
     // to be fixed!! currently you cannot press more than one operator in a row as the firstNum will reset to 0
     // also want to fix it so you can press digit * - + and have it use the + without the displayText getting locked in as the '-' sign.
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
       console.log(
-        `minus clicked. operator: ${operator}, displayText: ${displayText}, eventOperator: ${eventOperator}`
+        `Minus clicked while 0 in display. 
+        operator: ${operator}, 
+        displayText: ${displayText}, 
+        eventOperator: ${eventOperator}`
       );
     } else {
       setFirstNum(parseFloat(displayText));
       setOperator(eventOperator);
       setDisplayText('0');
       console.log(
-        `LastSum: ${lastSum}, firstNum: ${firstNum}, operator: ${operator}, displayText: ${displayText}, eventOperator: ${eventOperator}`
+        `Operator clicked:
+        lastSum: ${lastSum}, 
+        firstNum: ${firstNum}, 
+        operator: ${operator}, 
+        displayText: ${displayText}, 
+        eventOperator: ${eventOperator}`
       );
     }
   };
@@ -82,34 +85,43 @@ const Calculator = () => {
         sum = firstNum / parseFloat(displayText);
         break;
       default:
-        sum = 'I am a papaya';
-        console.log(sum);
+        sum = 'no operator';
+        console.log(`Current sum: ${sum}`);
     }
 
+    // sets the text to each display
     setDisplayText(sum);
     setLastSum(sum);
+
+    // resets firstNum and operator
     setFirstNum(0);
     setOperator('');
-    setShowingResult(true);
+
     console.log(
-      `ShowingResult: ${showingResult}, LastSum: ${lastSum}, firstNum: ${firstNum}, operator: ${operator}, displayText: ${displayText}, sum: ${sum}`
+      `Equal was pressed.
+      LastSum: ${lastSum}, 
+      firstNum: ${firstNum}, 
+      operator: ${operator}, 
+      displayText: ${displayText}, 
+      sum: ${sum}`
     );
   };
 
   // RETURN/RENDER //
   return (
     <div className='calculator'>
+      <h1>lastSum</h1>
       <Display className='inputDisplay' displayText={lastSum} />
+      <h1>displayText</h1>
       <Display
         className='outputDisplay'
         displayText={displayText}
         id='display'
       />
-
       <section className='buttonContainer'>
-        {digits.map((button) => (
+        {digits.map(button => (
           <Button
-            onClick={(e) => {
+            onClick={e => {
               handleDigitClick(e.target.innerText);
             }}
             buttonText={button.text}
@@ -118,7 +130,7 @@ const Calculator = () => {
           />
         ))}
 
-        {operators.map((button) => {
+        {operators.map(button => {
           if (button.text === 'C') {
             return (
               <Button
@@ -134,7 +146,7 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={(e) => {
+                onClick={e => {
                   handleEqualSign(e.target.innerText);
                 }}
               />
@@ -145,13 +157,25 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={(e) => {
+                onClick={e => {
                   handleOperator(e.target.innerText);
                 }}
               />
             );
           }
         })}
+
+        <div className='debug-console'>
+          <div>
+            <h1>FirstNum: {firstNum}</h1>
+          </div>
+          <div>
+            <h1>operator: {operator}</h1>
+          </div>
+          <div>
+            <h1>displayText: {displayText}</h1>
+          </div>
+        </div>
       </section>
     </div>
   );
