@@ -10,6 +10,7 @@ const Calculator = () => {
   const [firstNum, setFirstNum] = useState(0);
   const [operator, setOperator] = useState('');
   const [lastSum, setLastSum] = useState(0);
+  const [showingResult, setShowingResult] = useState(false);
 
   // FUNCTIONS //
 
@@ -21,6 +22,10 @@ const Calculator = () => {
     else - concatenates the event target value to the current displayText */
   const handleDigitClick = (eventText) => {
     let newText;
+
+    if (showingResult) {
+      setShowingResult(false);
+    }
 
     if (displayText === '0') {
       newText = eventText;
@@ -43,12 +48,16 @@ const Calculator = () => {
     // also want to fix it so you can press digit * - + and have it use the + without the displayText getting locked in as the '-' sign.
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
-      console.log('minus', displayText, operator, eventOperator);
+      console.log(
+        `minus clicked. operator: ${operator}, displayText: ${displayText}, eventOperator: ${eventOperator}`
+      );
     } else {
       setFirstNum(parseFloat(displayText));
       setOperator(eventOperator);
       setDisplayText('0');
-      console.log('operator', firstNum, displayText, operator, eventOperator);
+      console.log(
+        `LastSum: ${lastSum}, firstNum: ${firstNum}, operator: ${operator}, displayText: ${displayText}, eventOperator: ${eventOperator}`
+      );
     }
   };
 
@@ -81,7 +90,10 @@ const Calculator = () => {
     setLastSum(sum);
     setFirstNum(0);
     setOperator('');
-    console.log(lastSum, firstNum, operator, displayText, sum);
+    setShowingResult(true);
+    console.log(
+      `ShowingResult: ${showingResult}, LastSum: ${lastSum}, firstNum: ${firstNum}, operator: ${operator}, displayText: ${displayText}, sum: ${sum}`
+    );
   };
 
   // RETURN/RENDER //
