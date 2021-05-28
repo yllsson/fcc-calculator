@@ -16,7 +16,7 @@ $med-size: 1.6rem;
 // Temporary bug fix style
 
 .debug-console {
-  @include flexbox(row);
+  @include flexbox(column);
   justify-content: space-between;
 }
 h1 {

@@ -39,7 +39,11 @@ const Calculator = () => {
     }
 
     setDisplayText(newText);
-    setTopDisplayText(`${topDisplayText} ${newText}`);
+    if (operator) {
+      setTopDisplayText(`${topDisplayText} ${newText}`);
+    } else {
+      setTopDisplayText(newText);
+    }
   };
 
   /* handleOperator()
@@ -56,15 +60,16 @@ const Calculator = () => {
     } else if (displayText === '-') {
       setOperator(eventOperator);
       setDisplayText('0');
+      setTopDisplayText(newTopDisp);
     } else if (displayText == 0) {
       setOperator(eventOperator);
+      setTopDisplayText(newTopDisp);
     } else {
       setFirstNum(parseFloat(displayText));
       setOperator(eventOperator);
       setDisplayText('0');
+      setTopDisplayText(newTopDisp);
     }
-
-    setTopDisplayText(newTopDisp);
   };
 
   /* handleEqualSign()
