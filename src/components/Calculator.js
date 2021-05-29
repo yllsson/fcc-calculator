@@ -52,23 +52,31 @@ const Calculator = () => {
   Resets the displayText.
   */
   const handleOperator = eventOperator => {
-    // to be fixed!! currently you cannot press more than one operator in a row as the firstNum will reset to 0
     let newTopDisp = `${topDisplayText} ${eventOperator}`;
+
+    /* created addToDisplay() to avoid repeating myself in the if-statement below.
+    It takes a boolean as an argument (resetDisplayText)
+    If resetDisplayText is true we reset the displayText to '0'.
+    Whether true or false we always set the operator to eventOperator and topDisplayText to newTopDisp
+    */
+    const addToDisplay = resetDisplayText => {
+      if (resetDisplayText) {
+        setDisplayText('0');
+      }
+
+      setOperator(eventOperator);
+      setTopDisplayText(newTopDisp);
+    };
 
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
     } else if (displayText === '-') {
-      setOperator(eventOperator);
-      setDisplayText('0');
-      setTopDisplayText(newTopDisp);
+      addToDisplay(true);
     } else if (displayText == 0) {
-      setOperator(eventOperator);
-      setTopDisplayText(newTopDisp);
+      addToDisplay(false);
     } else {
       setFirstNum(parseFloat(displayText));
-      setOperator(eventOperator);
-      setDisplayText('0');
-      setTopDisplayText(newTopDisp);
+      addToDisplay(true);
     }
   };
 
@@ -78,6 +86,12 @@ const Calculator = () => {
   */
   const handleEqualSign = () => {
     let sum;
+
+    // testing eval...
+    console.log(
+      topDisplayText.split(' ').join(''),
+      eval(topDisplayText.split(' ').join(''))
+    );
 
     switch (operator) {
       case '+':
@@ -103,15 +117,6 @@ const Calculator = () => {
 
     // resets firstNum and operator
     handleReset();
-
-    console.log(
-      `Equal was pressed.
-      topDisplayText: ${topDisplayText}
-      firstNum: ${firstNum}, 
-      operator: ${operator}, 
-      displayText: ${displayText}, 
-      sum: ${sum}`
-    );
   };
 
   // RETURN/RENDER //
