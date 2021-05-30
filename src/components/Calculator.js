@@ -61,13 +61,6 @@ const Calculator = () => {
   */
   const handleOperator = eventOperator => {
     let newTopDisp;
-    if (didJustCalculate) {
-      console.log('operator pressed directly after calculation');
-      setDidJustCalculate(false);
-      newTopDisp = `${prevSum}${eventOperator}`;
-    } else {
-      newTopDisp = `${topDisplayText}${eventOperator}`;
-    }
 
     /* created addToDisplay() to avoid repeating myself in the if-statement below.
     It takes a boolean as an argument (resetDisplayText)
@@ -82,6 +75,20 @@ const Calculator = () => {
       setOperator(eventOperator);
       setTopDisplayText(newTopDisp);
     };
+
+    // need to figure out how to make the top and normal display show - if pressed right after a calculation
+    // currently topDisplay shows - but display shows 0...
+    if (didJustCalculate) {
+      console.log('operator pressed directly after calculation');
+      setDidJustCalculate(false);
+      if (eventOperator === '-') {
+        newTopDisp = eventOperator;
+      } else {
+        newTopDisp = `${prevSum}${eventOperator}`;
+      }
+    } else {
+      newTopDisp = `${topDisplayText}${eventOperator}`;
+    }
 
     if (displayText === '0' && eventOperator === '-') {
       setDisplayText(eventOperator);
