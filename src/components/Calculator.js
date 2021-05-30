@@ -10,6 +10,8 @@ const Calculator = () => {
   const [topDisplayText, setTopDisplayText] = useState('');
   const [firstNum, setFirstNum] = useState(0);
   const [operator, setOperator] = useState('');
+  const [didJustCalculate, setDidJustCalculate] = useState(false);
+  const [prevSum, setPrevSum] = useState(0);
 
   // FUNCTIONS //
 
@@ -26,8 +28,14 @@ const Calculator = () => {
     checks whether the current text is a single 0,
     if it is - sets the displayText directly to the event target value
     else if the string already includes a decimal point - retains the current displayText.
-    else - concatenates the event target value to the current displayText */
+    else - concatenates the event target value to the current displayText 
+  */
   const handleDigitClick = eventText => {
+    // if (didJustCalculate) {
+    //   console.log('it happened again!');
+    //   setDidJustCalculate(false);
+    // }
+    // console.log(didJustCalculate);
     let newText;
 
     if (displayText === '0') {
@@ -39,10 +47,9 @@ const Calculator = () => {
     }
 
     setDisplayText(newText);
-    if (operator) {
-      setTopDisplayText(`${topDisplayText} ${newText}`);
-    } else {
-      setTopDisplayText(newText);
+    console.log(newText);
+    if (!(String(topDisplayText).includes('.') && eventText === '.')) {
+      setTopDisplayText(`${topDisplayText}${eventText}`);
     }
   };
 
@@ -52,7 +59,15 @@ const Calculator = () => {
   Resets the displayText.
   */
   const handleOperator = eventOperator => {
-    let newTopDisp = `${topDisplayText} ${eventOperator}`;
+    let newTopDisp;
+    if (didJustCalculate) {
+      console.log('it happened!');
+      setTopDisplayText('');
+      setDidJustCalculate(false);
+      newTopDisp = `${prevSum}${eventOperator}`;
+    } else {
+      newTopDisp = `${topDisplayText}${eventOperator}`;
+    }
 
     /* created addToDisplay() to avoid repeating myself in the if-statement below.
     It takes a boolean as an argument (resetDisplayText)
@@ -88,10 +103,7 @@ const Calculator = () => {
     let sum;
 
     // testing eval...
-    console.log(
-      topDisplayText.split(' ').join(''),
-      eval(topDisplayText.split(' ').join(''))
-    );
+    console.log(topDisplayText, eval(topDisplayText));
 
     switch (operator) {
       case '+':
@@ -113,10 +125,15 @@ const Calculator = () => {
 
     // sets the text to each display
     setDisplayText(sum);
-    setTopDisplayText(`${topDisplayText} = ${sum}`);
+    setTopDisplayText(`${topDisplayText}=${sum}`);
 
     // resets firstNum and operator
     handleReset();
+
+    // sets didJustCalculate to true
+    setDidJustCalculate(true);
+
+    setPrevSum(sum);
   };
 
   // RETURN/RENDER //
