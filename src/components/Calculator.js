@@ -31,14 +31,9 @@ const Calculator = () => {
     else - concatenates the event target value to the current displayText 
   */
   const handleDigitClick = eventText => {
-    // if (didJustCalculate) {
-    //   console.log('it happened again!');
-    //   setDidJustCalculate(false);
-    // }
-    // console.log(didJustCalculate);
     let newText;
 
-    if (displayText === '0') {
+    if (displayText === '0' || didJustCalculate) {
       newText = eventText;
     } else if (String(displayText).includes('.') && eventText === '.') {
       newText = displayText;
@@ -47,9 +42,15 @@ const Calculator = () => {
     }
 
     setDisplayText(newText);
-    console.log(newText);
+    console.log(didJustCalculate, newText);
     if (!(String(topDisplayText).includes('.') && eventText === '.')) {
       setTopDisplayText(`${topDisplayText}${eventText}`);
+    }
+
+    if (didJustCalculate) {
+      console.log('digit pressed directly after calculation');
+      setDidJustCalculate(false);
+      setTopDisplayText(newText);
     }
   };
 
@@ -61,8 +62,7 @@ const Calculator = () => {
   const handleOperator = eventOperator => {
     let newTopDisp;
     if (didJustCalculate) {
-      console.log('it happened!');
-      setTopDisplayText('');
+      console.log('operator pressed directly after calculation');
       setDidJustCalculate(false);
       newTopDisp = `${prevSum}${eventOperator}`;
     } else {
