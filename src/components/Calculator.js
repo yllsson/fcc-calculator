@@ -208,24 +208,6 @@ const Calculator = () => {
             );
           }
         })}
-
-        <div className='debug-console'>
-          <div>
-            <h1>FirstNum: {firstNum}</h1>
-          </div>
-          <div>
-            <h1>operator: {operator}</h1>
-          </div>
-          <div>
-            <h1>displayText: {displayText}</h1>
-          </div>
-          <div>
-            <h1>topDisplayText: {topDisplayText}</h1>
-          </div>
-          <div>
-            <h1>didJustCalculate: {`${didJustCalculate}`}</h1>
-          </div>
-        </div>
       </section>
     </div>
   );
