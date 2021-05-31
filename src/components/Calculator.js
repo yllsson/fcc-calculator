@@ -27,25 +27,34 @@ const Calculator = () => {
     adds the innerText of the button to the displays when clicked
   */
   const handleDigitClick = (eventText) => {
-    let newText;
+    let newDisp;
     let newTopDisp;
 
-    if (displayText === '0' || didJustCalculate) {
-      // check if new calculation (if true let the displayText be the digit clicked)
-      newText = eventText;
+    if (didJustCalculate) {
+      // check if new calculation after calculation just been done (if true let the displayText be the digit clicked)
+      newDisp = eventText;
       newTopDisp = eventText;
       setDidJustCalculate(false);
+    } else if (displayText === '0') {
+      // check if new calculation (if true let the displayText be the digit clicked)
+      newDisp = eventText;
+      newTopDisp = eventText;
+      setDidJustCalculate(false);
+    } else if (displayText === operator) {
+      // check if operator has just been pressed and is currently showing in the display
+      newDisp = eventText;
+      newTopDisp = topDisplayText + eventText;
     } else if (String(displayText).includes('.') && eventText === '.') {
       // check to exclude double periods (if true - keep displayText and topDisplayText as is)
-      newText = displayText;
+      newDisp = displayText;
       newTopDisp = topDisplayText;
     } else {
       // otherwise add the new digit to the displayText and to the topDisplayText
-      newText = displayText + eventText;
+      newDisp = displayText + eventText;
       newTopDisp = topDisplayText + eventText;
     }
 
-    setDisplayText(newText);
+    setDisplayText(newDisp);
     setTopDisplayText(newTopDisp);
   };
 
@@ -55,51 +64,68 @@ const Calculator = () => {
   Resets the displayText.
   */
   const handleOperator = (eventOperator) => {
+    let newDisp;
     let newTopDisp;
 
-    setFirstNum(parseFloat(displayText));
-    setOperator(eventOperator);
-    setDisplayText(eventOperator);
-    setTopDisplayText(`${topDisplayText}${eventOperator}`);
-
-    /* created addToDisplay() to avoid repeating myself in the if-statement below.
-    It takes a boolean as an argument (resetDisplayText)
-    If resetDisplayText is true we reset the displayText to '0'.
-    Whether true or false we always set the operator to eventOperator and topDisplayText to newTopDisp
-    */
-    // const addToDisplay = (resetDisplayText) => {
-    //   if (resetDisplayText) {
-    //     setDisplayText('0');
-    //   }
-
-    //   setOperator(eventOperator);
-    //   setTopDisplayText(newTopDisp);
-    // };
-
-    // need to figure out how to make the top and normal display show - if pressed right after a calculation
-    // currently topDisplay shows - but display shows 0...
-    // if (didJustCalculate) {
-    //   console.log('operator pressed directly after calculation');
-    //   setDidJustCalculate(false);
-    //   if (eventOperator === '-') {
-    //     newTopDisp = eventOperator;
-    //   } else {
-    //     newTopDisp = `${prevSum}${eventOperator}`;
-    //   }
-    // } else {
-    //   newTopDisp = `${topDisplayText}${eventOperator}`;
-    // }
-
     // if (displayText === '0' && eventOperator === '-') {
-    //   setDisplayText(eventOperator);
+    //   newDisp = eventOperator;
     // } else if (displayText === '-') {
-    //   addToDisplay(true);
+    //   setOperator(eventOperator);
+    //   newDisp = '0';
+    //   newTopDisp = topDisplayText + eventOperator;
     // } else if (displayText == 0) {
-    //   addToDisplay(false);
+    //   setOperator(eventOperator);
+    //   newTopDisp = topDisplayText + eventOperator;
     // } else {
-    //   setFirstNum(parseFloat(displayText));
-    //   addToDisplay(true);
+    //   setOperator(eventOperator);
+    //   newDisp = eventOperator;
+    //   newTopDisp = topDisplayText + eventOperator;
     // }
+
+    const topDispEndsWithOperator = topDisplayText.endsWith(/\+|\-|\*|\//);
+
+    if (topDispEndsWithOperator && eventOperator === '-') {
+      // check if we just clicked an operator and now clicked minus (so as to write 5 + -3 for example)
+      // set the display to be the new operator
+      newDisp = eventOperator;
+
+      // add the minus to the topDisp
+      newTopDisp = topDisplayText + eventOperator;
+      // don't do anything with the operator
+
+      console.log(
+        'operator in top text and we clicked minus',
+        topDispEndsWithOperator
+      );
+    } else if (topDispEndsWithOperator) {
+      // set the display to be the new operator
+      newDisp = eventOperator;
+
+      // add the operator
+      newTopDisp = topDisplayText.replace(operator, eventOperator);
+
+      setOperator(eventOperator);
+
+      console.log(
+        'operator in top text and we clicked +,*,/',
+        topDispEndsWithOperator
+      );
+      //
+    } else {
+      // any other case when operator is pressed
+
+      // reset the displayText (ready for the next number)
+      newDisp = eventOperator;
+
+      // add the clicked operator to the end of the current topDisplay
+      newTopDisp = topDisplayText + eventOperator;
+
+      // store the clicked operator in the operator state
+      setOperator(eventOperator);
+    }
+
+    setDisplayText(newDisp);
+    setTopDisplayText(newTopDisp);
   };
 
   /* handleEqualSign()
@@ -108,27 +134,43 @@ const Calculator = () => {
   */
   const handleEqualSign = () => {
     let sum;
+    let extractedTopDispText = topDisplayText;
 
-    // testing eval...
-    console.log(topDisplayText, eval(topDisplayText));
+    // /\+|\-|\*|\//
 
-    switch (operator) {
-      case '+':
-        sum = firstNum + parseFloat(displayText);
-        break;
-      case '-':
-        sum = firstNum - parseFloat(displayText);
-        break;
-      case '*':
-        sum = firstNum * parseFloat(displayText);
-        break;
-      case '/':
-        sum = firstNum / parseFloat(displayText);
-        break;
-      default:
-        sum = parseFloat(displayText);
-        console.log(`Current sum: ${sum}`);
+    if (extractedTopDispText.includes('--')) {
+      let shifted = extractedTopDispText.split('--').shift();
+
+      let popped = extractedTopDispText.split('--').pop();
+
+      let secondShift = popped.split(/\+|\-|\*|\//).shift();
+      let third = popped.slice(1);
+
+      let result = [...shifted, '-(-', secondShift, ')', third].join('');
+
+      console.log(shifted, popped, secondShift, third, result);
+
+      sum = eval(result);
+    } else {
+      sum = eval(topDisplayText);
     }
+    // switch (operator) {
+    //   case '+':
+    //     sum = firstNum + parseFloat(displayText);
+    //     break;
+    //   case '-':
+    //     sum = firstNum - parseFloat(displayText);
+    //     break;
+    //   case '*':
+    //     sum = firstNum * parseFloat(displayText);
+    //     break;
+    //   case '/':
+    //     sum = firstNum / parseFloat(displayText);
+    //     break;
+    //   default:
+    //     sum = parseFloat(displayText);
+    //     console.log(`Current sum: ${sum}`);
+    // }
 
     // sets the text to each display
     setDisplayText(sum);
@@ -217,6 +259,9 @@ const Calculator = () => {
           </div>
           <div>
             <h1>topDisplayText: {topDisplayText}</h1>
+          </div>
+          <div>
+            <h1>didJustCalculate: {`${didJustCalculate}`}</h1>
           </div>
         </div>
       </section>
