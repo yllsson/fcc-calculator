@@ -24,34 +24,29 @@ const Calculator = () => {
   };
 
   /* handleDigitClick()
-    Grabs the innerText of the button component clicked,
-    checks whether the current text is a single 0,
-    if it is - sets the displayText directly to the event target value
-    else if the string already includes a decimal point - retains the current displayText.
-    else - concatenates the event target value to the current displayText 
+    adds the innerText of the button to the displays when clicked
   */
-  const handleDigitClick = eventText => {
+  const handleDigitClick = (eventText) => {
     let newText;
+    let newTopDisp;
 
     if (displayText === '0' || didJustCalculate) {
+      // check if new calculation (if true let the displayText be the digit clicked)
       newText = eventText;
+      newTopDisp = eventText;
+      setDidJustCalculate(false);
     } else if (String(displayText).includes('.') && eventText === '.') {
+      // check to exclude double periods (if true - keep displayText and topDisplayText as is)
       newText = displayText;
+      newTopDisp = topDisplayText;
     } else {
+      // otherwise add the new digit to the displayText and to the topDisplayText
       newText = displayText + eventText;
+      newTopDisp = topDisplayText + eventText;
     }
 
     setDisplayText(newText);
-    console.log(didJustCalculate, newText);
-    if (!(String(topDisplayText).includes('.') && eventText === '.')) {
-      setTopDisplayText(`${topDisplayText}${eventText}`);
-    }
-
-    if (didJustCalculate) {
-      console.log('digit pressed directly after calculation');
-      setDidJustCalculate(false);
-      setTopDisplayText(newText);
-    }
+    setTopDisplayText(newTopDisp);
   };
 
   /* handleOperator()
@@ -59,47 +54,52 @@ const Calculator = () => {
   Takes the current displayText and stores in firstNum.
   Resets the displayText.
   */
-  const handleOperator = eventOperator => {
+  const handleOperator = (eventOperator) => {
     let newTopDisp;
+
+    setFirstNum(parseFloat(displayText));
+    setOperator(eventOperator);
+    setDisplayText(eventOperator);
+    setTopDisplayText(`${topDisplayText}${eventOperator}`);
 
     /* created addToDisplay() to avoid repeating myself in the if-statement below.
     It takes a boolean as an argument (resetDisplayText)
     If resetDisplayText is true we reset the displayText to '0'.
     Whether true or false we always set the operator to eventOperator and topDisplayText to newTopDisp
     */
-    const addToDisplay = resetDisplayText => {
-      if (resetDisplayText) {
-        setDisplayText('0');
-      }
+    // const addToDisplay = (resetDisplayText) => {
+    //   if (resetDisplayText) {
+    //     setDisplayText('0');
+    //   }
 
-      setOperator(eventOperator);
-      setTopDisplayText(newTopDisp);
-    };
+    //   setOperator(eventOperator);
+    //   setTopDisplayText(newTopDisp);
+    // };
 
     // need to figure out how to make the top and normal display show - if pressed right after a calculation
     // currently topDisplay shows - but display shows 0...
-    if (didJustCalculate) {
-      console.log('operator pressed directly after calculation');
-      setDidJustCalculate(false);
-      if (eventOperator === '-') {
-        newTopDisp = eventOperator;
-      } else {
-        newTopDisp = `${prevSum}${eventOperator}`;
-      }
-    } else {
-      newTopDisp = `${topDisplayText}${eventOperator}`;
-    }
+    // if (didJustCalculate) {
+    //   console.log('operator pressed directly after calculation');
+    //   setDidJustCalculate(false);
+    //   if (eventOperator === '-') {
+    //     newTopDisp = eventOperator;
+    //   } else {
+    //     newTopDisp = `${prevSum}${eventOperator}`;
+    //   }
+    // } else {
+    //   newTopDisp = `${topDisplayText}${eventOperator}`;
+    // }
 
-    if (displayText === '0' && eventOperator === '-') {
-      setDisplayText(eventOperator);
-    } else if (displayText === '-') {
-      addToDisplay(true);
-    } else if (displayText == 0) {
-      addToDisplay(false);
-    } else {
-      setFirstNum(parseFloat(displayText));
-      addToDisplay(true);
-    }
+    // if (displayText === '0' && eventOperator === '-') {
+    //   setDisplayText(eventOperator);
+    // } else if (displayText === '-') {
+    //   addToDisplay(true);
+    // } else if (displayText == 0) {
+    //   addToDisplay(false);
+    // } else {
+    //   setFirstNum(parseFloat(displayText));
+    //   addToDisplay(true);
+    // }
   };
 
   /* handleEqualSign()
@@ -126,7 +126,7 @@ const Calculator = () => {
         sum = firstNum / parseFloat(displayText);
         break;
       default:
-        sum = 'no operator';
+        sum = parseFloat(displayText);
         console.log(`Current sum: ${sum}`);
     }
 
@@ -155,9 +155,9 @@ const Calculator = () => {
         id='display'
       />
       <section className='buttonContainer'>
-        {digits.map(button => (
+        {digits.map((button) => (
           <Button
-            onClick={e => {
+            onClick={(e) => {
               handleDigitClick(e.target.innerText);
             }}
             buttonText={button.text}
@@ -166,7 +166,7 @@ const Calculator = () => {
           />
         ))}
 
-        {operators.map(button => {
+        {operators.map((button) => {
           if (button.text === 'C') {
             return (
               <Button
@@ -186,7 +186,7 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={e => {
+                onClick={(e) => {
                   handleEqualSign(e.target.innerText);
                 }}
               />
@@ -197,7 +197,7 @@ const Calculator = () => {
                 buttonText={button.text}
                 id={button.id}
                 key={button.id}
-                onClick={e => {
+                onClick={(e) => {
                   handleOperator(e.target.innerText);
                 }}
               />
