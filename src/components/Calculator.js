@@ -78,7 +78,11 @@ const Calculator = () => {
       topDisplayText.endsWith('*-') ||
       topDisplayText.endsWith('/-');
 
-    if (topDispEndsWithOperator && eventOperator === '-') {
+    if (didJustCalculate) {
+      newTopDisp = prevSum + eventOperator;
+      newDisp = eventOperator;
+      setDidJustCalculate(false);
+    } else if (topDispEndsWithOperator && eventOperator === '-') {
       // check if we just clicked an operator and now clicked minus (so as to write 5 + -3 for example)
       // set the display to be the new operator
       newDisp = eventOperator;
