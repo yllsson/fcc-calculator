@@ -82,7 +82,17 @@ const Calculator = () => {
     //   newTopDisp = topDisplayText + eventOperator;
     // }
 
-    const topDispEndsWithOperator = topDisplayText.endsWith(/\+|\-|\*|\//);
+    let topDispEndsWithOperator =
+      topDisplayText.endsWith('+') ||
+      topDisplayText.endsWith('-') ||
+      topDisplayText.endsWith('*') ||
+      topDisplayText.endsWith('/');
+    let topDispEndsWithTwoOps =
+      topDisplayText.endsWith('+-') ||
+      topDisplayText.endsWith('--') ||
+      topDisplayText.endsWith('*-') ||
+      topDisplayText.endsWith('/-');
+    console.log(topDispEndsWithTwoOps);
 
     if (topDispEndsWithOperator && eventOperator === '-') {
       // check if we just clicked an operator and now clicked minus (so as to write 5 + -3 for example)
@@ -97,6 +107,15 @@ const Calculator = () => {
         'operator in top text and we clicked minus',
         topDispEndsWithOperator
       );
+    } else if (topDispEndsWithTwoOps) {
+      // set the display to be the new operator
+      newDisp = eventOperator;
+
+      newTopDisp =
+        topDisplayText.slice(0, topDisplayText.length - 2) + eventOperator;
+
+      console.log(newTopDisp);
+      setOperator(eventOperator);
     } else if (topDispEndsWithOperator) {
       // set the display to be the new operator
       newDisp = eventOperator;
@@ -129,48 +148,10 @@ const Calculator = () => {
   };
 
   /* handleEqualSign()
-  Sets a variable sum.
-  Checks the chosen operator (+,-,*,/) and performs the according calculation.
+  Sets a variable sum and runs the topDisplayText through the eval function
   */
   const handleEqualSign = () => {
-    let sum;
-    let extractedTopDispText = topDisplayText;
-
-    // /\+|\-|\*|\//
-
-    if (extractedTopDispText.includes('--')) {
-      let shifted = extractedTopDispText.split('--').shift();
-
-      let popped = extractedTopDispText.split('--').pop();
-
-      let secondShift = popped.split(/\+|\-|\*|\//).shift();
-      let third = popped.slice(1);
-
-      let result = [...shifted, '-(-', secondShift, ')', third].join('');
-
-      console.log(shifted, popped, secondShift, third, result);
-
-      sum = eval(result);
-    } else {
-      sum = eval(topDisplayText);
-    }
-    // switch (operator) {
-    //   case '+':
-    //     sum = firstNum + parseFloat(displayText);
-    //     break;
-    //   case '-':
-    //     sum = firstNum - parseFloat(displayText);
-    //     break;
-    //   case '*':
-    //     sum = firstNum * parseFloat(displayText);
-    //     break;
-    //   case '/':
-    //     sum = firstNum / parseFloat(displayText);
-    //     break;
-    //   default:
-    //     sum = parseFloat(displayText);
-    //     console.log(`Current sum: ${sum}`);
-    // }
+    const sum = eval(topDisplayText);
 
     // sets the text to each display
     setDisplayText(sum);
