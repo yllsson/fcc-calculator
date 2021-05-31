@@ -150,64 +150,66 @@ const Calculator = () => {
   // RETURN/RENDER //
   return (
     <div className='calculator'>
-      <h1>topDisplayText</h1>
-      <Display className='inputDisplay' displayText={topDisplayText} />
-      <h1>displayText</h1>
-      <Display
-        className='outputDisplay'
-        displayText={displayText}
-        id='display'
-      />
+      <div className='displays'>
+        <Display className='inputDisplay' displayText={topDisplayText} />
+        <Display
+          className='outputDisplay'
+          displayText={displayText}
+          id='display'
+        />
+      </div>
+      <section className='clearAndEqual'>
+        <Button
+          buttonText={'C'}
+          id={'clear'}
+          onClick={() => {
+            handleReset();
+            setDisplayText('0');
+            setTopDisplayText('');
+          }}
+        />
+        <Button
+          buttonText={'='}
+          id={'equals'}
+          onClick={(e) => {
+            handleEqualSign(e.target.innerText);
+          }}
+        />
+      </section>
       <section className='buttonContainer'>
-        {digits.map((button) => (
-          <Button
-            onClick={(e) => {
-              handleDigitClick(e.target.innerText);
-            }}
-            buttonText={button.text}
-            id={button.id}
-            key={button.id}
-          />
-        ))}
+        <div className='digits'>
+          {digits.map((button) => (
+            <Button
+              onClick={(e) => {
+                handleDigitClick(e.target.innerText);
+              }}
+              buttonText={button.text}
+              id={button.id}
+              key={button.id}
+            />
+          ))}
+        </div>
 
-        {operators.map((button) => {
-          if (button.text === 'C') {
-            return (
-              <Button
-                buttonText={button.text}
-                id={button.id}
-                key={button.id}
-                onClick={() => {
-                  handleReset();
-                  setDisplayText('0');
-                  setTopDisplayText('');
-                }}
-              />
-            );
-          } else if (button.text === '=') {
-            return (
-              <Button
-                buttonText={button.text}
-                id={button.id}
-                key={button.id}
-                onClick={(e) => {
-                  handleEqualSign(e.target.innerText);
-                }}
-              />
-            );
-          } else {
-            return (
-              <Button
-                buttonText={button.text}
-                id={button.id}
-                key={button.id}
-                onClick={(e) => {
-                  handleOperator(e.target.innerText);
-                }}
-              />
-            );
-          }
-        })}
+        <div className='operators'>
+          {operators.map((button) => {
+            if (button.text === 'C') {
+              // do nothing
+            } else if (button.text === '=') {
+              // do nothing
+            } else {
+              return (
+                <Button
+                  buttonText={button.text}
+                  id={button.id}
+                  key={button.id}
+                  onClick={(e) => {
+                    handleOperator(e.target.innerText);
+                  }}
+                />
+              );
+            }
+          })}
+        </div>
       </section>
     </div>
   );

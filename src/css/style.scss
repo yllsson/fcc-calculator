@@ -1,5 +1,10 @@
 // Variables
-$med-size: 1.6rem;
+$med-size: 2rem;
+$background-color: #e8fccf;
+$calculator-color: #a3a3a3;
+$button-color: #f6feec;
+$display-color: #f6feec;
+$text-color: #134611;
 
 // Mixins
 @mixin flexbox($direction) {
@@ -13,16 +18,6 @@ $med-size: 1.6rem;
   border: 1px solid $color;
 }
 
-// Temporary bug fix style
-
-.debug-console {
-  @include flexbox(column);
-  justify-content: space-between;
-}
-h1 {
-  color: olivedrab;
-}
-
 // general style
 * {
   box-sizing: border-box;
@@ -33,28 +28,101 @@ html {
 }
 
 body {
-  @include flexbox(row);
-  @include border(black);
+  margin: 0;
+  padding: 0;
   height: 100vh;
+  background-color: $background-color;
+}
+
+#root {
+  @include flexbox(row);
+  height: 100%;
+  width: 100%;
+}
+
+.app {
+  @include flexbox(row);
 }
 
 // calculator
 .calculator {
-  @include border(green);
+  @include flexbox(column);
+  justify-content: space-evenly;
+  border-radius: 8px;
   padding: $med-size;
+  background-color: $calculator-color;
+  color: $text-color;
+  max-width: 90%;
+  height: 50rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.displays {
+  width: 100%;
 }
 
 .display {
-  @include border(purple);
+  background-color: $display-color;
+  width: 100%;
+  min-height: 6rem;
   padding: $med-size;
   font-size: 2.4rem;
+  border-style: inset;
 }
 
 // buttons
-.buttonContainer {
-  @include border(purple);
+.clearAndEqual {
+  @include flexbox(row);
+  width: 100%;
+
+  #clear {
+    flex-grow: 2;
+    height: 5rem;
+  }
+
+  #equals {
+    width: 5rem;
+    height: 5rem;
+  }
 }
 
-button {
+.buttonContainer {
+  @include flexbox(row);
+  flex-wrap: wrap;
+  height: 50%;
+}
+
+.digits {
+  @include flexbox(row);
+  flex-wrap: wrap;
+  flex: 1;
+  height: 100%;
+
+  .button {
+    width: 33%;
+    height: 25%;
+    flex-grow: 1;
+  }
+
+  #zero {
+    width: 66%;
+  }
+}
+
+.operators {
+  @include flexbox(row);
+  flex-wrap: wrap;
+  width: 5rem;
+  height: 100%;
+
+  .button {
+    width: 5rem;
+    height: 25%;
+  }
+}
+
+.button {
   font-size: $med-size;
+  background-color: $button-color;
+  border: 0.5px solid $text-color;
 }

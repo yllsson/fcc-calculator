@@ -22,9 +22,6 @@ const operators = [
   {
     text: 'C',
     id: 'clear'
-    // handler() {
-    //   setDisplayText('0');
-    // }
   }
 ];
 
