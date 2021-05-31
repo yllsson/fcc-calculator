@@ -67,21 +67,6 @@ const Calculator = () => {
     let newDisp;
     let newTopDisp;
 
-    // if (displayText === '0' && eventOperator === '-') {
-    //   newDisp = eventOperator;
-    // } else if (displayText === '-') {
-    //   setOperator(eventOperator);
-    //   newDisp = '0';
-    //   newTopDisp = topDisplayText + eventOperator;
-    // } else if (displayText == 0) {
-    //   setOperator(eventOperator);
-    //   newTopDisp = topDisplayText + eventOperator;
-    // } else {
-    //   setOperator(eventOperator);
-    //   newDisp = eventOperator;
-    //   newTopDisp = topDisplayText + eventOperator;
-    // }
-
     let topDispEndsWithOperator =
       topDisplayText.endsWith('+') ||
       topDisplayText.endsWith('-') ||
@@ -92,7 +77,6 @@ const Calculator = () => {
       topDisplayText.endsWith('--') ||
       topDisplayText.endsWith('*-') ||
       topDisplayText.endsWith('/-');
-    console.log(topDispEndsWithTwoOps);
 
     if (topDispEndsWithOperator && eventOperator === '-') {
       // check if we just clicked an operator and now clicked minus (so as to write 5 + -3 for example)
@@ -101,20 +85,18 @@ const Calculator = () => {
 
       // add the minus to the topDisp
       newTopDisp = topDisplayText + eventOperator;
-      // don't do anything with the operator
 
-      console.log(
-        'operator in top text and we clicked minus',
-        topDispEndsWithOperator
-      );
+      // don't do anything with the operator
     } else if (topDispEndsWithTwoOps) {
+      // check if the topDisp ends in two operators (+-, --, *-, /-)
       // set the display to be the new operator
       newDisp = eventOperator;
 
+      // cut off both the last two characters of the topDisplayText and replace with the clicked operator
       newTopDisp =
         topDisplayText.slice(0, topDisplayText.length - 2) + eventOperator;
 
-      console.log(newTopDisp);
+      // store the clicked operator in the operator state
       setOperator(eventOperator);
     } else if (topDispEndsWithOperator) {
       // set the display to be the new operator
@@ -123,13 +105,8 @@ const Calculator = () => {
       // add the operator
       newTopDisp = topDisplayText.replace(operator, eventOperator);
 
+      // store the clicked operator in the operator state
       setOperator(eventOperator);
-
-      console.log(
-        'operator in top text and we clicked +,*,/',
-        topDispEndsWithOperator
-      );
-      //
     } else {
       // any other case when operator is pressed
 
