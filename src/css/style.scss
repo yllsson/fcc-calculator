@@ -1,9 +1,10 @@
 // Variables
-$med-size: 2rem;
+$m-size: 2rem;
+$l-size: 4.5rem;
 $background-color: #e8fccf;
 $calculator-color: #a3a3a3;
 $button-color: #f6feec;
-$display-color: #f6feec;
+$display-color: #ffffff;
 $text-color: #134611;
 
 // Mixins
@@ -21,6 +22,8 @@ $text-color: #134611;
 // general style
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -28,8 +31,6 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   height: 100vh;
   background-color: $background-color;
 }
@@ -40,20 +41,15 @@ body {
   width: 100%;
 }
 
-.app {
-  @include flexbox(row);
-}
-
 // calculator
 .calculator {
   @include flexbox(column);
   justify-content: space-evenly;
   border-radius: 8px;
-  padding: $med-size;
+  padding: $m-size;
   background-color: $calculator-color;
   color: $text-color;
-  max-width: 90%;
-  height: 50rem;
+  width: 30rem;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -65,42 +61,44 @@ body {
   background-color: $display-color;
   width: 100%;
   min-height: 6rem;
-  padding: $med-size;
+  padding: $m-size;
   font-size: 2.4rem;
   border-style: inset;
 }
 
 // buttons
-.clearAndEqual {
-  @include flexbox(row);
-  width: 100%;
-
-  #clear {
-    flex-grow: 2;
-    height: 5rem;
-  }
-
-  #equals {
-    width: 5rem;
-    height: 5rem;
-  }
+.button {
+  font-size: $m-size;
+  background-color: $button-color;
+  border: 0.5px solid $text-color;
+  height: 5rem;
+  width: 5rem;
 }
 
 .buttonContainer {
   @include flexbox(row);
-  flex-wrap: wrap;
   height: 50%;
+  margin: $m-size 0 0;
+  width: 100%;
+}
+
+.clearAndDigits {
+  @include flexbox(column);
+  width: 75%;
+
+  #clear {
+    width: 100%;
+    flex-grow: 1;
+  }
 }
 
 .digits {
   @include flexbox(row);
   flex-wrap: wrap;
-  flex: 1;
-  height: 100%;
+  width: 100%;
 
-  .button {
+  .digit {
     width: 33%;
-    height: 25%;
     flex-grow: 1;
   }
 
@@ -117,12 +115,9 @@ body {
 
   .button {
     width: 5rem;
-    height: 25%;
   }
-}
 
-.button {
-  font-size: $med-size;
-  background-color: $button-color;
-  border: 0.5px solid $text-color;
+  #equals {
+    width: 5rem;
+  }
 }

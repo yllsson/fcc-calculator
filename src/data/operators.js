@@ -1,9 +1,5 @@
 const operators = [
   {
-    text: '=',
-    id: 'equals'
-  },
-  {
     text: '+',
     id: 'add'
   },
@@ -22,6 +18,10 @@ const operators = [
   {
     text: 'C',
     id: 'clear'
+  },
+  {
+    text: '=',
+    id: 'equals'
   }
 ];
 

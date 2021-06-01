@@ -158,44 +158,47 @@ const Calculator = () => {
           id='display'
         />
       </div>
-      <section className='clearAndEqual'>
-        <Button
-          buttonText={'C'}
-          id={'clear'}
-          onClick={() => {
-            handleReset();
-            setDisplayText('0');
-            setTopDisplayText('');
-          }}
-        />
-        <Button
-          buttonText={'='}
-          id={'equals'}
-          onClick={(e) => {
-            handleEqualSign(e.target.innerText);
-          }}
-        />
-      </section>
+
       <section className='buttonContainer'>
-        <div className='digits'>
-          {digits.map((button) => (
-            <Button
-              onClick={(e) => {
-                handleDigitClick(e.target.innerText);
-              }}
-              buttonText={button.text}
-              id={button.id}
-              key={button.id}
-            />
-          ))}
-        </div>
+        <section className='clearAndDigits'>
+          <Button
+            buttonText={'C'}
+            id={'clear'}
+            onClick={() => {
+              handleReset();
+              setDisplayText('0');
+              setTopDisplayText('');
+            }}
+          />
+          <div className='digits'>
+            {digits.map((button) => (
+              <Button
+                onClick={(e) => {
+                  handleDigitClick(e.target.innerText);
+                }}
+                buttonText={button.text}
+                id={button.id}
+                key={button.id}
+                className={'digit'}
+              />
+            ))}
+          </div>
+        </section>
 
         <div className='operators'>
           {operators.map((button) => {
             if (button.text === 'C') {
               // do nothing
             } else if (button.text === '=') {
-              // do nothing
+              return (
+                <Button
+                  buttonText={'='}
+                  id={'equals'}
+                  onClick={(e) => {
+                    handleEqualSign(e.target.innerText);
+                  }}
+                />
+              );
             } else {
               return (
                 <Button
