@@ -3,7 +3,8 @@ $m-size: 2rem;
 $l-size: 4.5rem;
 $background-color: #e8fccf;
 $calculator-color: #a3a3a3;
-$button-color: #f6feec;
+$button-color: #ffffff;
+$button-border: #808080;
 $display-color: #ffffff;
 $text-color: #134611;
 
@@ -50,6 +51,7 @@ body {
   background-color: $calculator-color;
   color: $text-color;
   width: 30rem;
+  max-width: 80vw;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -70,15 +72,20 @@ body {
 .button {
   font-size: $m-size;
   background-color: $button-color;
-  border: 0.5px solid $text-color;
+  border: 0.5rem solid $button-border;
+  border-style: outset;
   height: 5rem;
   width: 5rem;
 }
 
+.button:active {
+  border-style: inset;
+}
+
 .buttonContainer {
   @include flexbox(row);
-  height: 50%;
   margin: $m-size 0 0;
+  height: 50%;
   width: 100%;
 }
 
@@ -111,13 +118,5 @@ body {
   @include flexbox(row);
   flex-wrap: wrap;
   width: 5rem;
-  height: 100%;
-
-  .button {
-    width: 5rem;
-  }
-
-  #equals {
-    width: 5rem;
-  }
+  // height: 100%;
 }
