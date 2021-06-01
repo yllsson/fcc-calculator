@@ -1,0 +1,51 @@
+// buttons
+.button {
+  font-size: $m-size;
+  background-color: $button-color;
+  border: 0.45rem solid $button-border;
+  border-style: outset;
+  height: 5rem;
+  width: 5rem;
+}
+
+.button:active {
+  border-style: inset;
+}
+
+// button containers
+.buttonContainer {
+  @include flexbox(row);
+  margin: $m-size 0 0;
+  height: 50%;
+  width: 100%;
+}
+
+.clearAndDigits {
+  @include flexbox(column);
+  width: 75%;
+
+  #clear {
+    width: 100%;
+    flex-grow: 1;
+  }
+}
+
+.digits {
+  @include flexbox(row);
+  flex-wrap: wrap;
+  width: 100%;
+
+  .digit {
+    width: 33%;
+    flex-grow: 1;
+  }
+
+  #zero {
+    width: 66%;
+  }
+}
+
+.operators {
+  @include flexbox(column);
+  width: 5rem;
+}

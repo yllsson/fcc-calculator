@@ -1,0 +1,25 @@
+.displays {
+  width: 100%;
+  border: 0.45rem solid lightgray;
+  border-style: inset;
+}
+
+.display {
+  background-color: $display-color;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2.4rem;
+  padding: $m-size;
+  width: 100%;
+}
+
+.topDisplay {
+  border-bottom: 0.05rem dotted lightgray;
+  font-size: 1.4rem;
+  height: 3rem;
+}
+
+.mainDisplay {
+  border-top: none;
+  height: 6rem;
+}

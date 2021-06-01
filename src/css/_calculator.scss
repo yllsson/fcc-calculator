@@ -1,0 +1,12 @@
+// calculator
+.calculator {
+  @include flexbox(column);
+  justify-content: space-evenly;
+  border-radius: 8px;
+  padding: $m-size;
+  background-color: $calculator-color;
+  color: $text-color;
+  width: 30rem;
+  max-width: 80vw;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}

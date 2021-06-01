@@ -1,26 +1,10 @@
-// Variables
-$m-size: 2rem;
-$l-size: 4.5rem;
-$background-color: #e8fccf;
-$calculator-color: #a3a3a3;
-$button-color: #ffffff;
-$button-border: #808080;
-$display-color: #ffffff;
-$text-color: #134611;
+@import './settings';
+@import './mixins';
+@import './displays';
+@import './buttons';
+@import './calculator';
 
-// Mixins
-@mixin flexbox($direction) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin border($color) {
-  border: 1px solid $color;
-}
-
-// general style
+// general style/base
 * {
   box-sizing: border-box;
   margin: 0;
@@ -40,83 +24,4 @@ body {
   @include flexbox(row);
   height: 100%;
   width: 100%;
-}
-
-// calculator
-.calculator {
-  @include flexbox(column);
-  justify-content: space-evenly;
-  border-radius: 8px;
-  padding: $m-size;
-  background-color: $calculator-color;
-  color: $text-color;
-  width: 30rem;
-  max-width: 80vw;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-}
-
-.displays {
-  width: 100%;
-}
-
-.display {
-  background-color: $display-color;
-  width: 100%;
-  min-height: 6rem;
-  padding: $m-size;
-  font-size: 2.4rem;
-  border-style: inset;
-}
-
-// buttons
-.button {
-  font-size: $m-size;
-  background-color: $button-color;
-  border: 0.5rem solid $button-border;
-  border-style: outset;
-  height: 5rem;
-  width: 5rem;
-}
-
-.button:active {
-  border-style: inset;
-}
-
-.buttonContainer {
-  @include flexbox(row);
-  margin: $m-size 0 0;
-  height: 50%;
-  width: 100%;
-}
-
-.clearAndDigits {
-  @include flexbox(column);
-  width: 75%;
-
-  #clear {
-    width: 100%;
-    flex-grow: 1;
-  }
-}
-
-.digits {
-  @include flexbox(row);
-  flex-wrap: wrap;
-  width: 100%;
-
-  .digit {
-    width: 33%;
-    flex-grow: 1;
-  }
-
-  #zero {
-    width: 66%;
-  }
-}
-
-.operators {
-  @include flexbox(row);
-  flex-wrap: wrap;
-  width: 5rem;
-  // height: 100%;
 }

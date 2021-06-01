@@ -151,9 +151,9 @@ const Calculator = () => {
   return (
     <div className='calculator'>
       <div className='displays'>
-        <Display className='inputDisplay' displayText={topDisplayText} />
+        <Display className='topDisplay' displayText={topDisplayText} />
         <Display
-          className='outputDisplay'
+          className='mainDisplay'
           displayText={displayText}
           id='display'
         />
