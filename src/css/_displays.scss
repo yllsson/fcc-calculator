@@ -7,19 +7,20 @@
 .display {
   background-color: $display-color;
   border: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Cousine, monospace;
   font-size: 2.4rem;
-  padding: $m-size;
+  padding: 1.5rem 1.6rem;
+  letter-spacing: 0.1rem;
   width: 100%;
 }
 
 .topDisplay {
   border-bottom: 0.05rem dotted lightgray;
   font-size: 1.4rem;
-  height: 3rem;
+  height: 4rem;
 }
 
 .mainDisplay {
   border-top: none;
-  height: 6rem;
+  height: 5rem;
 }
