@@ -132,7 +132,10 @@ const Calculator = () => {
   Sets a variable sum and runs the topDisplayText through the eval function
   */
   const handleEqualSign = () => {
-    const sum = eval(topDisplayText);
+    let sum = eval(topDisplayText);
+
+    sum = parseFloat(sum.toFixed(11));
+    console.log(sum);
 
     // sets the text to each display
     setDisplayText(sum);
@@ -164,6 +167,7 @@ const Calculator = () => {
           <Button
             buttonText={'C'}
             id={'clear'}
+            key={'clear'}
             onClick={() => {
               handleReset();
               setDisplayText('0');
@@ -192,8 +196,9 @@ const Calculator = () => {
             } else if (button.text === '=') {
               return (
                 <Button
-                  buttonText={'='}
-                  id={'equals'}
+                  buttonText={button.text}
+                  id={button.id}
+                  key={button.id}
                   onClick={(e) => {
                     handleEqualSign(e.target.innerText);
                   }}
